@@ -1,12 +1,19 @@
 version: '3.5'
 services:
-  docker-angular-service:
-    container_name: docker-angular
-    build: . # Location of our Dockerfile
-    #volumes: # Volume binding
-      #- '.:/usr/src/app'
+  docker-angular-production:
+    build: .
+    container_name: docker-angular-server
     ports:
       - '8080:80'
       - '4443:443'
+  docker-angular-development:
     command: >
-      bash -c "yarn install && npx ng serve --host 0.0.0.0 --port 80"
+      bash -c "npx ng serve --host 0.0.0.0 --port 4200"
+    container_name: docker-angular-development-server
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    ports:
+      - '4200:4200'
+    volumes:
+      - .:/tmp/app
