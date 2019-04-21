@@ -8,7 +8,7 @@ FROM node AS development
 ENV NODE_ENV development
 VOLUME /tmp/app
 WORKDIR /tmp/app
-# --poll is a Windows fix
+# --poll is a fix for Windows hosts
 # see https://stackoverflow.com/a/44196594/1071200
 RUN npx ng serve --host 0.0.0.0 --poll
 # development server
