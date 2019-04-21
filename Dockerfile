@@ -31,11 +31,11 @@ RUN yarn e2e
 FROM node AS build
 ENV NODE_ENV production
 WORKDIR /tmp/build
-COPY --from=test /tmp/test/ .
+COPY --from=test /tmp/test .
 RUN yarn build
 
 FROM nginx AS production
-COPY --from=build /tmp/build/dist/docker-angular/ /usr/share/nginx/html/
+COPY --from=build /tmp/build/dist/docker-angular /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 # HTTPS (not included)
 EXPOSE 443
