@@ -16,4 +16,5 @@ services:
     ports:
       - '4200:4200'
     volumes:
-      - .:/tmp/app
+      - .:/tmp/app/
+      - ./node_modules/:/tmp/app/node_modules/
