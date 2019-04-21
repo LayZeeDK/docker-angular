@@ -10,7 +10,7 @@
     "e2e": "npx ng e2e",
     "docker:build": "docker build --tag docker-angular . && docker run --interactive --tty --rm --name=docker-angular-production -P docker-angular",
     "docker:compose": "docker-compose up --build",
-    "docker:start": "docker build --tag docker-angular:development --file=development.Dockerfile . && docker run --interactive --tty --rm --name=docker-angular-development -p 4200:4200 -p 49153:49153 docker-angular:development",
+    "docker:start": "docker build --tag docker-angular:development --file=development.Dockerfile . && docker run --interactive --tty --rm --name=docker-angular-development -p 4200:4200 -p 49153:49153 -v %cd%:/tmp/app -v %cd%/node_modules:/tmp/app/node_modules docker-angular:development",
     "docker:test": "docker build --target=test --tag docker-angular:test . && docker run --interactive --tty --rm --name=docker-angular-test docker-angular:test"
   },
   "private": true,
