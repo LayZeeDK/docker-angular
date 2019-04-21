@@ -2,16 +2,16 @@
   "name": "docker-angular",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod",
-    "test": "ng test --browsers=ChromeHeadless --watch=false",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "docker:build": "docker build --tag docker-angular .",
+    "ng": "npx ng",
+    "start": "npx ng serve",
+    "build": "npx ng build --prod",
+    "test": "npx ng test --browsers=ChromeHeadless --watch=false",
+    "lint": "npx ng lint",
+    "e2e": "npx ng e2e",
+    "docker:build": "docker build --tag docker-angular . && docker run --interactive --tty --rm --name=docker-angular-production -P docker-angular",
     "docker:compose": "docker-compose up --build",
-    "docker:run": "docker run --interactive --tty --name=docker-angular --port=8080:80 --port=4443:443 docker-angular",
-    "docker:test": "docker build --target=test --tag docker-angular:test . && docker run --interactive --tty --name=docker-angular-test docker-angular:test"
+    "docker:start": "docker build --tag docker-angular:development --file=development.Dockerfile . && docker run --interactive --tty --rm --name=docker-angular-development -p 4200:4200 -p 49153:49153 docker-angular:development",
+    "docker:test": "docker build --target=test --tag docker-angular:test . && docker run --interactive --tty --rm --name=docker-angular-test docker-angular:test"
   },
   "private": true,
   "dependencies": {

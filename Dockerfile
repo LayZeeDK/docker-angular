@@ -7,17 +7,17 @@ FROM zenika/alpine-chrome:with-node AS node-chrome
 
 FROM node AS source-with-dependencies
 ENV NODE_ENV development
-VOLUME /tmp/app/node_modules
 WORKDIR /tmp/app
 COPY . .
 RUN yarn install
+VOLUME /tmp/app/node_modules
 
 FROM source-with-dependencies AS development
 VOLUME /tmp/app
 WORKDIR /tmp/app
 # --poll is a fix for Windows hosts
 # see https://stackoverflow.com/a/44196594/1071200
-ENTRYPOINT npx ng serve --host 0.0.0.0 --poll
+ENTRYPOINT yarn start --host 0.0.0.0 --poll
 # development server
 EXPOSE 4200
 # live reload
@@ -28,6 +28,7 @@ EXPOSE 49153
 # installed by the base image
 FROM node-chrome AS test
 WORKDIR /tmp/app
+COPY --from=source-with-dependencies /tmp/app .
 RUN yarn test
 RUN yarn e2e
 # remote Chrome debugging
