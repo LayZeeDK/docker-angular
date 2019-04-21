@@ -11,7 +11,7 @@ VOLUME /tmp/app
 WORKDIR /tmp/app
 # --poll is a fix for Windows hosts
 # see https://stackoverflow.com/a/44196594/1071200
-RUN npx ng serve --host 0.0.0.0 --poll
+ENTRYPOINT npx ng serve --host 0.0.0.0 --poll
 # development server
 EXPOSE 4200
 # live reload
