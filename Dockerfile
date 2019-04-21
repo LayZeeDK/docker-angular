@@ -3,6 +3,7 @@
 
 FROM node:lts-alpine AS node
 FROM nginx:stable-alpine AS nginx
+FROM zenika/alpine-chrome:with-node AS node-chrome
 
 FROM node AS development
 ENV NODE_ENV development
@@ -16,11 +17,10 @@ EXPOSE 4200
 # live reload
 EXPOSE 49153
 
-
 # it would be better to use the same base image for build and test to make sure
 # we have the same Node version, but I want to keep this simple by having Chrome
 # installed by the base image
-FROM zenika/alpine-chrome:with-node AS test
+FROM node-chrome AS test
 ENV NODE_ENV development
 WORKDIR /tmp/test
 COPY . .
