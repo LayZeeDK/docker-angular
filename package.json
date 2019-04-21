@@ -8,10 +8,10 @@
     "test": "ng test --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docker:build": "docker build -t docker-angular:latest .",
+    "docker:build": "docker build --tag docker-angular .",
     "docker:compose": "docker-compose up --build",
-    "docker:run": "docker run --interactive --tty --tag=docker-angular --port=8080:80 --port=4443:443",
-    "docker:test": "docker build --target=test --tag docker-angular:test ."
+    "docker:run": "docker run --interactive --tty --name=docker-angular --port=8080:80 --port=4443:443 docker-angular",
+    "docker:test": "docker build --target=test --tag docker-angular:test . && docker run --interactive --tty --name=docker-angular-test docker-angular:test"
   },
   "private": true,
   "dependencies": {
