@@ -14,7 +14,7 @@ services:
     container_name: docker-angular-development-server
     build:
       context: .
-      dockerfile: Dockerfile.development
+      dockerfile: development.Dockerfile
       target: development
     ports:
       - "4200:4200"
