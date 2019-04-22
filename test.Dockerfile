@@ -1,6 +1,6 @@
 # based on https://github.com/gmathieu/node-browsers
 # https://store.docker.com/images/node
-FROM node:10-stretch
+FROM node:10-stretch AS node-chrome
 # https://tracker.debian.org/pkg/chromium
 ARG CHROMIUM=73.0.3683.75-1~deb9u1
 # https://tracker.debian.org/pkg/firefox-esr
@@ -27,7 +27,6 @@ ENV \
   # browser bin paths
   CHROME_BIN=/usr/bin/chromium \
   FIREFOX_BIN=/usr/bin/firefox
-
 ENV NODE_ENV development
 USER root
 WORKDIR /tmp/app
