@@ -1,13 +1,12 @@
-# TODO: add serve stage/Dockerfile with live-reload
-# TODO: use volume for ng serve
-
-FROM node:10-alpine AS node
-FROM nginx:stable-alpine AS nginx
-# FROM zenika/alpine-chrome:with-node AS node-chrome
+FROM node:10-alpine AS app
+ENV NODE_ENV development
+WORKDIR /tmp/app
+COPY . .
+RUN yarn install
 
 # based on https://github.com/gmathieu/node-browsers
 # https://store.docker.com/images/node
-FROM node:10-stretch AS node-chrome
+FROM node:10-stretch AS test-base
 # https://tracker.debian.org/pkg/chromium
 ARG CHROMIUM=73.0.3683.75-1~deb9u1
 # https://tracker.debian.org/pkg/firefox-esr
@@ -35,29 +34,22 @@ ENV \
   CHROME_BIN=/usr/bin/chromium \
   FIREFOX_BIN=/usr/bin/firefox
 ENV NODE_ENV development
-
-FROM node AS source-with-dependencies
-ENV NODE_ENV development
-WORKDIR /tmp/app
-COPY . .
-RUN yarn install
-
-# it would be better to use the same base image for build and test to make sure
-# we have the same Node version, but I want to keep this simple by having Chrome
-# installed by the base image
-FROM node-chrome AS test
 USER root
 WORKDIR /tmp/app
-COPY --from=source-with-dependencies /tmp/app .
+COPY --from=app /tmp/app .
+
+FROM test-base AS test
 RUN yarn test
+
+FROM test-base AS e2e
 RUN yarn e2e
 
-FROM source-with-dependencies AS build
+FROM app AS build
 ENV NODE_ENV production
 WORKDIR /tmp/app
 RUN yarn build
 
-FROM nginx AS production
+FROM nginx:stable-alpine AS production
 COPY --from=build /tmp/app/dist/docker-angular /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 # HTTPS (certificate not included)
