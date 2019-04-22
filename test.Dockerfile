@@ -1,3 +1,4 @@
+# based on https://github.com/gmathieu/node-browsers
 # https://store.docker.com/images/node
 FROM node:10-stretch
 # https://tracker.debian.org/pkg/chromium
@@ -34,5 +35,5 @@ COPY . .
 RUN yarn install
 # RUN ./node_modules/protractor/bin/webdriver-manager update
 # RUN ./node_modules/protractor/bin/webdriver-manager start --detach && yarn e2e
-# RUN yarn test
-RUN yarn e2e
+RUN yarn test
+# RUN yarn e2e
