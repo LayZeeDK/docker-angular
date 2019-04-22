@@ -1,6 +1,4 @@
-FROM node:lts-alpine AS node
-
-FROM node
+FROM node:10-alpine
 ENV NODE_ENV development
 VOLUME /tmp/app
 VOLUME /tmp/app/node_modules
