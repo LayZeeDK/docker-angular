@@ -33,7 +33,5 @@ USER root
 WORKDIR /tmp/app
 COPY . .
 RUN yarn install
-# RUN ./node_modules/protractor/bin/webdriver-manager update
-# RUN ./node_modules/protractor/bin/webdriver-manager start --detach && yarn e2e
 RUN yarn test
 RUN yarn e2e
