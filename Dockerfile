@@ -23,7 +23,6 @@ RUN sed -i -e 's/v3.9/edge/g' /etc/apk/repositories \
   chromium=${CHROMIUM} \
   && apk upgrade --no-cache --available
 ENV CHROME_BIN /usr/bin/chromium
-USER root
 WORKDIR /tmp/app
 COPY --from=app /tmp/app/ ./
 
