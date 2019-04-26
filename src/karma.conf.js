@@ -25,14 +25,14 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['DockerChromiumHeadless'],
     customLaunchers: {
-      DockerChromeHeadless: {
-        base: 'ChromeHeadless',
+      DockerChromiumHeadless: {
+        base: 'ChromiumHeadless',
         flags: ['--no-sandbox'],
       },
     },
-    singleRun: false,
+    singleRun: true,
     restartOnFileChange: true
   });
 };
