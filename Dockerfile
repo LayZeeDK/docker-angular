@@ -1,10 +1,13 @@
-FROM node:10-alpine AS app
+FROM node:10-alpine AS node-base
+
+FROM node-base AS app
 ENV NODE_ENV development
 WORKDIR /tmp/app
-COPY . .
+COPY package.json yarn.lock ./
 RUN yarn install
+COPY . .
 
-FROM node:10-alpine AS test-base
+FROM node-base AS test-base
 # https://pkgs.alpinelinux.org/package/edge/community/x86_64/chromium
 ARG CHROMIUM=73.0.3683.103-r0
 RUN sed -i -e 's/v3.9/edge/g' /etc/apk/repositories \
